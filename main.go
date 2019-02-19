@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/atze234/k8schartop/controller"
 	"github.com/gorilla/mux"
+	"github.com/invia-de/K8VersionTrack/controller"
 	"github.com/spf13/viper"
 	"github.com/tylerb/graceful"
 )
