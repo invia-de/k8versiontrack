@@ -1,0 +1,33 @@
+{{define "content"}}
+<div class="container">
+  <div class="row">
+    <div class="jumbotron">
+      <h3>VersionChecks</h1>
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Application</th>
+                  <th scope="col">Latest Version</th>
+                  <th scope="col">Installed</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range $y, $x := .Objects }}
+                <tr>
+                  <th scope="row">{{$y}}</th>
+                  <td><a href="{{ $x.Link }}">{{ $x.Name }}</a></td>
+                  <td>{{ $x.LatestVersion }}</td>
+                  <td>
+                      {{range $del, $p := .Installed }}
+                            <b>{{$p.Cluster}}:</b> {{$p.Version}} <br />
+                      {{end}}
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
+    </div>
+  </div>
+</div>
+{{end}}

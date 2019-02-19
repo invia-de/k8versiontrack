@@ -1,0 +1,22 @@
+Feeds:
+  -
+    Link: https://github.com/prometheus/prometheus/releases.atom
+    Name: Prometheus Server
+    Installed:
+      -
+        Cluster: "Cluster A"
+        Version: 1.0
+      -
+        Cluster: "Cluster B"
+        Version: 1.1
+
+  -
+    Link: https://github.com/grafana/grafana/releases.atom
+    Name: Grafana
+    Installed:
+      -
+        Cluster: "Cluster A"
+        Version: 1.0
+      -
+        Cluster: "Cluster B"
+        Version: 1.1
