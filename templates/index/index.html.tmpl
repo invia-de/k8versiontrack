@@ -19,9 +19,9 @@
                   <td><a href="{{ $x.Link }}">{{ $x.Name }}</a></td>
                   <td>{{ $x.LatestVersion }}</td>
                   <td>
-                      {{range $del, $p := .Installed }}
-                            <b>{{$p.Cluster}}:</b> {{$p.Version}} <br />
-                      {{end}}
+                      <span class="{{if ne $x.InstalledVersion $x.LatestVersion }}text-danger{{else}}text-dark{{end}}">
+                      {{ $x.InstalledVersion }}
+                  </span>
                   </td>
                 </tr>
                 {{end}}

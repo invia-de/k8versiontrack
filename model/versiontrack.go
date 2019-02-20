@@ -11,7 +11,6 @@ import (
 	//"k8s.io/api/core/v1"
 	//"k8s.io/apimachinery/pkg/api/resource"
 	//"k8s.io/apimachinery/pkg/watch"
-
 	"k8s.io/helm/pkg/helm"
 )
 
@@ -25,8 +24,9 @@ type PrometheusResult struct {
 	Objects []PrometheusList
 }
 type config struct {
-	FeedMap     []feed
-	StaticFeeds []feed
+	FeedMap             []feed
+	StaticFeeds         []feed
+	TillerConnectionURI string
 }
 type feed struct {
 	Name      string
@@ -35,10 +35,6 @@ type feed struct {
 }
 
 func GetVersions() PrometheusResult {
-	//@// TODO: Env Var for Local / Cluster Usage
-	helmclient := helm.NewClient(helm.Host("127.0.0.1:44134"))
-	releases, _ := helmclient.ListReleases()
-
 	v1, err := readConfig("feeds")
 	if err != nil {
 		logrus.Error(err)
@@ -48,6 +44,13 @@ func GetVersions() PrometheusResult {
 	if errUnmarshal != nil {
 		logrus.Error(errUnmarshal)
 	}
+
+	helmclient := helm.NewClient(helm.Host(C.TillerConnectionURI))
+	releases, err := helmclient.ListReleases()
+	if err != nil {
+		logrus.Error(err)
+	}
+
 	var res PrometheusResult
 	res.Objects = make([]PrometheusList, 0)
 
@@ -128,7 +131,11 @@ func getLatestVersionByFeedUrl(parseUrl string) string {
 func readConfig(filename string) (*viper.Viper, error) {
 	v := viper.New()
 	v.SetConfigName(filename)
-	v.AddConfigPath("./config/")
+	v.SetDefault("config_path", "./config")
+	v.SetEnvPrefix("kvt")
+	v.BindEnv("config_path")
+	v.AddConfigPath(v.Get("config_path").(string))
 	err := v.ReadInConfig()
+
 	return v, err
 }

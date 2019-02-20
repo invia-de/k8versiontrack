@@ -1,22 +1,10 @@
-Feeds:
+TillerConnectionURI: "127.0.0.1:44134"
+StaticFeeds:
+  -
+    Link: https://github.com/kubernetes/kops/releases.atom
+    Name: Kops
+    Installed: 1.11.0
+FeedMap:
   -
     Link: https://github.com/prometheus/prometheus/releases.atom
-    Name: Prometheus Server
-    Installed:
-      -
-        Cluster: "Cluster A"
-        Version: 1.0
-      -
-        Cluster: "Cluster B"
-        Version: 1.1
-
-  -
-    Link: https://github.com/grafana/grafana/releases.atom
-    Name: Grafana
-    Installed:
-      -
-        Cluster: "Cluster A"
-        Version: 1.0
-      -
-        Cluster: "Cluster B"
-        Version: 1.1
+    Name: prometheus
