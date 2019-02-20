@@ -1,0 +1,22 @@
+image: invia/k8versiontrack:0.0.1-alpha1
+feedsConfig: |
+  TillerConnectionURI: "tiller-deploy.kube-system:44134"
+  StaticFeeds:
+    -
+      Link: https://github.com/kubernetes/kops/releases.atom
+      Name: Kops
+      Installed: 1.11.0
+  FeedMap:
+    -
+      Link: https://github.com/prometheus/prometheus/releases.atom
+      Name: prometheus
+ingress:
+  enabled: false
+resources:
+  limits:
+   cpu: 100m
+   memory: 128Mi
+  requests:
+   cpu: 10m
+   memory: 128Mi
+

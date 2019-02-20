@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    chart: {{ template "k8versiontrack.chart" $ }}
+    heritage: {{ $.Release.Service }}
+  name: {{ template "k8versiontrack.fullname" $ }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "k8versiontrack.fullname" $ }}
+      release: {{ $.Release.Name }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "k8versiontrack.fullname" $ }} 
+        release: {{ $.Release.Name }}
+      annotations:
+        "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8888"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - image: {{ .Values.image }}
+        imagePullPolicy: Always
+        name: {{ template "k8versiontrack.fullname" $ }}
+        ports:
+        - containerPort: 8888
+          protocol: TCP
+        env:
+        - name: KVT_CONFIG_DIR
+          value: /etc/k8versiontrack 
+        volumeMounts:
+        - mountPath: /etc/k8versiontrack
+          name: feeds-volume
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: {{ template "k8versiontrack.fullname" $ }}-feeds
+        name: feeds-volume
+      resources:
+{{ toYaml .Values.resources | indent 12 }}
