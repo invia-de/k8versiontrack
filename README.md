@@ -1,23 +1,24 @@
 ## K8s Application Version Checks
-  * show what Version of different Tools are Installed in a Cluster, at what Version and whats the newest Version on Github
-  * Latest Releases are parsed from Github Atom Feeds
+  * offers the possibility to monitor versions of installed tools in a kubernetes cluster
+  * lists the most recent versions from github
+  * latest releases are parsed from github atom feeds
 
 ## Development
 
-1. Git Clone
+1. git clone
 
-2. Create and fill Configuration ./config/feeds.yaml
+2. create/copy and fill configuration from template ./config/feeds.yaml
 
-3. Run make build_container
+3. run ```make build_container```
 
-4. Run make run_container
+4. run ```make run_container```
 
 5. Once in Container run
-    ```
-    kubetoken for k8s login
-    kubectl port-forward $(kubectl get pod --selector app=helm,name=tiller -o jsonpath={.items..metadata.name} -n kube-system) 44134:44134 -n kube-system
-    go run main.go
-    ```
+
+    ```kubetoken``` for k8s login
+    ```kubectl port-forward $(kubectl get pod --selector app=helm,name=tiller -o jsonpath={.items..metadata.name} -n kube-system) 44134:44134 -n kube-system```
+    ```go run main.go```
+
 
 6. Point your Browser to localhost:8888
 
