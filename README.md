@@ -1,8 +1,8 @@
 ## K8s Application Version Checks
-  * offers the possibility to monitor versions of installed tools in a kubernetes cluster
-  * offers prometheus metrics endpoint for integration in grafana
-  * lists the most recent versions from github
-  * latest releases are parsed from github atom feeds
+  * Offers the possibility to monitor versions of installed tools in a kubernetes cluster
+  * Offers prometheus metrics endpoint for integration in grafana
+  * Lists the most recent versions from github
+  * Latest releases are parsed from github atom feeds
 
 ## Development
 
