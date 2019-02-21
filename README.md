@@ -15,7 +15,7 @@
 
 5. Once in Container run
 
-    ```kubetoken``` for k8s login
+    ```kubetoken``` for k8s login  
     ```kubectl port-forward $(kubectl get pod --selector app=helm,name=tiller -o jsonpath={.items..metadata.name} -n kube-system) 44134:44134 -n kube-system```
     ```go run main.go```
 
