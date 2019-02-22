@@ -1,4 +1,4 @@
-image: invia/k8versiontrack:0.0.1-alpha1
+image: invia/k8versiontrack:latest
 feedsConfig: |
   TillerConnectionURI: "tiller-deploy.kube-system:44134"
   StaticFeeds:
