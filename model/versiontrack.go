@@ -61,7 +61,7 @@ func GetVersions() PrometheusResult {
 		latestVersion := "unknown"
 
 		md := element.GetChart().GetMetadata()
-		logrus.Error(md)
+		//logrus.Error(md)
 		//Map Overridden feeds
 		for _, feedMap := range C.FeedMap {
 			if strings.Contains(feedMap.Name, element.Name) {
