@@ -33,7 +33,7 @@ spec:
         - containerPort: 8888
           protocol: TCP
         env:
-        - name: KVT_CONFIG_DIR
+        - name: KVT_CONFIG_PATH
           value: /etc/k8versiontrack 
         volumeMounts:
         - mountPath: /etc/k8versiontrack

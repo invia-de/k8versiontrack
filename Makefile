@@ -13,9 +13,8 @@ run_container:
 	docker run \
                 --rm \
                 -it \
-                -v ${PWD}:/go/src/github.com/invia-de/K8VersionTrack \
+                -v ${PWD}:/go/src/github.com/invia-de/k8versiontrack \
                 -p 8888:8888 \
                 --name k8sops \
         ${IMAGE} \
 	/bin/bash
-

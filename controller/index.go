@@ -12,7 +12,7 @@ import (
 	//"k8s.io/apimachinery/pkg/api/resource"
 	//"k8s.io/apimachinery/pkg/watch"
 	//"github.com/invia-de/K8VersionTrack/main"
-	"github.com/invia-de/K8VersionTrack/model"
+	"github.com/invia-de/k8versiontrack/model"
 )
 
 /*

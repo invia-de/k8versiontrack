@@ -1,7 +1,7 @@
 FROM golang
 
 # Add project directory to Docker image.
-ADD . /go/src/github.com/invia-de/K8VersionTrack
+ADD . /go/src/github.com/invia-de/k8versiontrack
 COPY ./scripts/kubetoken /usr/bin/kubetoken
 
 ENV HTTP_ADDR :8888
@@ -15,9 +15,9 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL
     echo "source <(kubectl completion bash)" >> ~/.bashrc
 
 
-WORKDIR /go/src/github.com/invia-de/K8VersionTrack
+WORKDIR /go/src/github.com/invia-de/k8versiontrack
 
 RUN go get
 RUN go build
 EXPOSE 8888
-CMD ./K8VersionTrack
+CMD ./k8versiontrack
