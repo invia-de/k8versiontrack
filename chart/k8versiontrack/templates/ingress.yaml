@@ -23,7 +23,7 @@ spec:
           - path: /{{ rest $url | join "/" }}
             backend:
               serviceName: {{ template "k8versiontrack.fullname" $ }}
-              servicePort: 8888
+              servicePort: 80
   {{- end -}}
 {{- if .Values.ingress.tls }}
   tls:
