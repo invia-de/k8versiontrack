@@ -47,6 +47,10 @@ FeedMap:
 ## Environment Variables for Configuration
 * **KVT_CONFIG_PATH:** Path to feeds.yaml config file. Default: `"./config"`
 
+* **KVT_CACHE_ENABLE:** Enable File Cache for Results. Default: true
+
+* **KVT_CACHE_TIME:** Cache TTL in Seconds. Default: 600
+
 * **KVT_HTTP_ADDR:** The host and port. Default: `":8888"`
 
 * **KVT_HTTP_CERT_FILE:** Path to cert file. Default: `""`

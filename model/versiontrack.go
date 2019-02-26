@@ -1,6 +1,8 @@
 package model
 
 import (
+	"strconv"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/spf13/viper"
 
@@ -11,6 +13,8 @@ import (
 	//"k8s.io/api/core/v1"
 	//"k8s.io/apimachinery/pkg/api/resource"
 	//"k8s.io/apimachinery/pkg/watch"
+
+	. "github.com/vcgo/filecache"
 	"k8s.io/helm/pkg/helm"
 )
 
@@ -27,6 +31,7 @@ type config struct {
 	FeedMap             []feed
 	StaticFeeds         []feed
 	TillerConnectionURI string
+	cache_time          int
 }
 type feed struct {
 	Name      string
@@ -35,10 +40,15 @@ type feed struct {
 }
 
 func GetVersions() PrometheusResult {
+	//https://github.com/spf13/viper/issues/188
 	v1, err := readConfig("feeds")
 	if err != nil {
 		logrus.Error(err)
 	}
+	if v1.GetBool("cache_enable") && Cache.IsExist("k8vtres") {
+		return Cache.Get("k8vtres").(PrometheusResult)
+	}
+
 	var C config
 	errUnmarshal := v1.Unmarshal(&C)
 	if errUnmarshal != nil {
@@ -103,6 +113,14 @@ func GetVersions() PrometheusResult {
 		}
 		res.Objects = append(res.Objects, ms)
 	}
+	if v1.GetBool("cache_enable") {
+		cachetime := v1.Get("cache_time")
+		ct, err := strconv.ParseInt(cachetime.(string), 10, 64)
+		err = Cache.Put("k8vtres", res, ct)
+		if err != nil {
+			logrus.Error(err)
+		}
+	}
 	return res
 }
 func cleanVersion(version string) string {
@@ -134,6 +152,10 @@ func readConfig(filename string) (*viper.Viper, error) {
 	v.SetDefault("config_path", "./config")
 	v.SetEnvPrefix("kvt")
 	v.BindEnv("config_path")
+	v.SetDefault("cache_enable", true)
+	v.SetDefault("cache_time", "600")
+	v.BindEnv("cache_enable")
+	v.BindEnv("cache_time")
 	v.AddConfigPath(v.Get("config_path").(string))
 	err := v.ReadInConfig()
 

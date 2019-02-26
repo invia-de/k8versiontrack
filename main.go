@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"net/http"
 	"time"
 
@@ -26,6 +27,7 @@ func newConfig() (*viper.Viper, error) {
 	c.SetDefault("http_key_file", "")
 	c.SetDefault("http_drain_interval", "1s")
 	c.SetEnvPrefix("kvt")
+
 	c.AutomaticEnv()
 
 	return c, nil
@@ -34,7 +36,7 @@ func newConfig() (*viper.Viper, error) {
 func main() {
 	vcl := model.NewVersionCollector()
 	prometheus.MustRegister(vcl)
-
+	gob.Register(model.PrometheusResult{})
 	cfg, err := newConfig()
 	if err != nil {
 		logrus.Fatal(err)
